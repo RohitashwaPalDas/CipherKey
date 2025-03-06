@@ -12,8 +12,10 @@ const passport = require('passport');
 const Password = require("./models/passwords"); 
 const User = require("./models/users");
 const port = 3000;
-
+const path = require('path');
 const MONGO_URL = process.env.MONGO_URL;
+
+const _dirname = path.resolve();
 
 main()
     .then(() => console.log("Connected to DB"))
@@ -49,10 +51,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
 
 app.get('/check-username/:username', async (req, res) => {
     try {
@@ -172,6 +170,11 @@ app.put("/password/:id", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+app.use(express.static(path.join(_dirname, '/frontend/dist')));
+app.get("*", (_, res) => {
+    res.sendFile(path.resolve(_dirname, 'frontend', 'dist', 'index.html'));
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`);
