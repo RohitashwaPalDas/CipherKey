@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/auth-check", { withCredentials: true });
+                const response = await axios.get("https://cipherkey.onrender.com/auth-check", { withCredentials: true });
                 setUser(response.data.authenticated ? response.data.user : null);
             } catch (error) {
                 setUser(null);
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
             console.log("Login Request:", { username, password });
     
             const response = await axios.post(
-                "http://localhost:3000/login",
+                "https://cipherkey.onrender.com/login",
                 { username, password },
                 { withCredentials: true }
             );
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log("Signup Data:", { firstname, lastname, username, password });
     
-            const response = await axios.post('http://localhost:3000/signup', 
+            const response = await axios.post('https://cipherkey.onrender.com/signup', 
                 { firstname, lastname, username, password }, 
                 { withCredentials: true }
             );
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+            await axios.post('https://cipherkey.onrender.com/logout', {}, { withCredentials: true });
             toast.success("Logged Out Successfully😢");
             setUser(null);
             navigate("/signup");  // Redirect to signup page after logout

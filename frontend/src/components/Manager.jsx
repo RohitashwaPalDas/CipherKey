@@ -11,7 +11,7 @@ const Manager = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const setPasswords = async () => {
-    let response = await fetch("http://localhost:3000/password/all", {
+    let response = await fetch("https://cipherkey.onrender.com/password/all", {
       method: "GET", 
       credentials: "include"
     });;
@@ -64,7 +64,7 @@ const Manager = () => {
     const urlEncodedData = new URLSearchParams(data).toString();
 
     if (isEditing) {
-      let res = await fetch(`http://localhost:3000/password/${form.id}`, {
+      let res = await fetch(`https://cipherkey.onrender.com/password/${form.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -86,7 +86,7 @@ const Manager = () => {
       return;
     }
 
-    const res = await fetch("http://localhost:3000/password/new", {
+    const res = await fetch("https://cipherkey.onrender.com/password/new", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -107,7 +107,7 @@ const Manager = () => {
   };
 
   const deletePassword = async (id) => {
-    const res = await fetch(`http://localhost:3000/password/${id}`, {
+    const res = await fetch(`https://cipherkey.onrender.com/password/${id}`, {
       method: "DELETE",
       credentials: "include"
     });
