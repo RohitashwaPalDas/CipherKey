@@ -36,7 +36,7 @@ app.use(cors({
 }));
 
 const store = MongoStore.create({
-    mongoUrl: dbURL,
+    mongoUrl: process.env.MONGO_URL,
     crypto:{
         secret: process.env.secretKey
     },
@@ -49,7 +49,7 @@ store.on("error", function(e){
 
 const sessionOptions = {
     store,
-    secret: process.env.secretKey,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false, // Only save session if something is stored in it
     cookie: {
