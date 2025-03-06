@@ -34,13 +34,32 @@ app.use(cors({
     credentials: true 
 }));
 
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false
-    })
-);
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    crypto:{
+        secret: process.env.secretKey
+    },
+    touchAfter: 24 * 3600 // time period in seconds
+})
+
+store.on("error", function(e){
+    console.log("Session Store Error", e);
+})
+
+const sessionOptions = {
+    store,
+    secret: process.env.secretKey,
+    resave: false,
+    saveUninitialized: false, // Only save session if something is stored in it
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+        httpOnly: true,
+        secure: false, // Set to true if using HTTPS
+        // sameSite: "none"
+    }
+};
+
+app.use(session(sessionOptions));
 
 app.use(passport.initialize());
 app.use(passport.session());
