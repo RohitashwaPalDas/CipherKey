@@ -30,7 +30,7 @@ const AuthForm = () => {
   const checkUsernameAvailability = async (username) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/check-username/${username}`
+        `https://cipherkey.onrender.com/check-username/${username}`
       );
       const data = await response.json();
       console.log(data);
